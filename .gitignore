@@ -1,0 +1,11 @@
+# ignore all media files
+media/
+
+# ignore environ file
+.env
+
+# ignore virtual env
+venv/
+
+# ignore pychach
+_pycache_/

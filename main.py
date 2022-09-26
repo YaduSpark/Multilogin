@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
 
+from Edit import ImageEdit
 app = Flask(__name__)
 
 @app.route("/")
@@ -10,10 +11,13 @@ def index():
 def hello(name):
     return f"<h2>Hello {(name)}</h2>"
 
-@app.route("/file", methods=["GET", "POST"])
+@app.route("/image", methods=["GET", "POST"])
 def file():
     if request.method=="POST":
+        num = request.form["number"]
         f = request.files["file"]
         f.save(f"media/{f.filename}")
-        return "<h2>File Upload Successfull</h2>"
+        f = ImageEdit(f"media/{f.filename}", int(num))
+        f.random_files()
+        return render_template("edit.html")
     return render_template("file.html")
