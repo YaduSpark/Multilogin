@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <title>Multilogin</title>
+      <meta name="description" content="" />
+      <meta name="keywords" content ="" />
+<link rel="stylesheet" href="css/bootstrap.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+<link rel='stylesheet' href='https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css'>
+<link rel='stylesheet' href='https://unpkg.com/filepond/dist/filepond.min.css'>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="bg">
+    <div class="container">
+        <section class="header">
+            <div class="logo">
+                <img src="images/logo.png">
+            </div>
+            <nav>
+                <ul>
+                    <li>Login</li>
+                    <li class="reg-btn">Registration</li>
+                </ul>
+            </nav>
+        </section>
+        <section class="content">
+            <div class="row">
+                <div class="col-md-12">
+
+                    <h2>Creative Unifier</h2>
+                    <h3>We uniqueize video and photo creatives for free</h3>
+                </div>
+                <div class="col-md-12">
+                  <form method="POST" enctype="multipart/form-data">
+                    <div class="file-upload">
+                   <div class="upload-icon-top"><img src="images/upload-icon.png"></div>
+                        
+
+                        <div class="format">JPG,PNG,MP4 files up to 100mb are supported </div>
+                        <div class="p-bar"></div>
+                        <input type="file" 
+                                class="filepond"
+                                name="filepond"
+                                data-max-file-size="100MB"/>
+                     <button type="submit" class="btn-primary btn">Submit</button>
+                    </div>
+                     <div class="copies">Number of copies: <span class="file-upload-span"><input type="number" name="number"></span></div>
+
+                </form>
+            </div>
+            </div>
+
+        </section>
+        <section class="icon-section mb-5">
+            <div class="row">
+                <div class="col-md-6">
+                 <div class="features">
+                     <img src="images/icon-2.png">
+                     <h3>All devices supported</h3>
+                     <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</p>
+                 </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="features">
+                        <img src="images/icon-4.png">
+                        <h3>Quick and easy</h3>
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</p>
+                    </div>
+                   </div>
+                   <div class="col-md-6">
+                    <div class="features">
+                        <img src="images/icon-3.png">
+                        <h3>Security guaranteed</h3>
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</p>
+                    </div>
+                   </div>
+                   <div class="col-md-6">
+                    <div class="features">
+                        <img src="images/icon-1.png">
+                        <h3>In the cloud</h3>
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</p>
+                    </div>
+                   </div>
+            </div>
+        </section>
+    </div>
+</div>
+</body>
+<script src='https://unpkg.com/filepond-plugin-file-encode/dist/filepond-plugin-file-encode.min.js'></script>
+<script src='https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.min.js'></script>
+<script src='https://unpkg.com/filepond-plugin-image-exif-orientation/dist/filepond-plugin-image-exif-orientation.min.js'></script>
+<script src='https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.js'></script>
+<script src='https://unpkg.com/filepond/dist/filepond.min.js'></script>
+<script  src="js/script.js"></script>
+</html>

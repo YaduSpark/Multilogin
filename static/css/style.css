@@ -1,0 +1,217 @@
+@font-face {
+    font-family: 'Heebo', sans-serif;
+    src: url(../fonts/Heebo-Regular.TTF);
+  }
+  @font-face {
+    font-family: 'Heebo', sans-serif;
+    src: url(../fonts/Heebo-Regular.TTF);
+  }
+.bg{
+    background-image: url(../images/bg.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+body{
+    font-family: 'Heebo', sans-serif;
+}
+.logo{
+    display: inline;
+}
+.logo img{
+    width: 185px;
+}
+.header{
+    margin: 40px 0;
+    display: inline-block;
+    width: 100%;
+}
+.header nav{
+    display: inline-block;
+    float: right;
+}
+.header nav ul li{
+    display: inline;
+    padding: 0 10px;
+}
+.header nav ul{
+    margin: 0;
+}
+.reg-btn{
+    background: rgb(0,95,249);
+    background: linear-gradient(90deg, rgba(0,95,249,1) 0%, rgba(9,80,194,1) 100%, rgba(255,255,255,1) 100%);
+    color: #fff;
+    padding: 8px 20px!important;
+    border-radius: 3px;
+}
+.content h2{
+    font-size: 46px;
+    color: #005ff9;
+    text-align: center;
+    font-weight: bold;
+}
+.content h3{
+    font-size: 28px;
+    color: #acacac;
+    text-align: center;
+}
+.features{
+    text-align: center;
+    padding: 0 45px;
+    margin-top: 50px;
+}
+.features img{
+    margin-bottom: 10px;
+}
+.features h3{
+    padding: 10px 0;
+   
+}
+.file-upload{
+    margin: 30px 0;
+    text-align: center;
+    position: relative;
+}
+
+.filepond--drop-label {
+    color: #fff;
+  }
+  
+  .filepond--label-action {
+    -webkit-text-decoration-color: #005ff9!important;
+            text-decoration-color: #005ff9!important;
+  }
+  
+  .filepond--panel-root {
+    border-radius: 2em;
+    background-color: #005ff9!important;
+    height: 1em;
+  }
+  
+  .filepond--item-panel {
+    background-color: #005ff9!important;
+  }
+  
+  .filepond--drip-blob {
+    background-color: #005ff9!important;
+  }
+  .filepond--root .filepond--credits{
+      display: none;
+  }
+  .filepond--drop-label{
+      background-color: #005ff9!important;
+      border-radius: 6px;
+      outline: dotted 2px #fff;
+    outline-offset: -30px;
+  }
+  .filepond--label-action {
+    cursor: pointer;
+    display: block;
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 6px;
+    color: #005ff9;
+    text-decoration: none!important;
+    margin: 40px 0;
+}
+.filepond--root .filepond--drop-label {
+    min-height: 300px;
+    padding: 50px 0 0 0;
+}
+.copies {
+    position: absolute;
+    top: 155px;
+    z-index: 999;
+    width: 100%;
+    color: #fff;
+    font-size: 20px;
+    text-align: center;
+}
+.format {
+    position: absolute;
+    top: 222px;
+    z-index: 999;
+    width: 100%;
+    color: #fff;
+    font-size: 14px;
+}
+.file-upload-span input{
+    font-family: sans-serif;
+    font-size: 100%;
+    line-height: 1.15;
+    margin: 0;
+    width: 25px;
+    border: none;
+}
+/* .filepond--root .filepond--list-scroller{
+    width: 150px!important;
+} */
+.file-upload-span {
+    background-color: #fff;
+    color: black;
+    border-radius: 4px;
+    padding: 3px 0;
+    font-size: 14px;
+    width: 3%!important;
+    display: inline-block;
+}
+.upload-icon-top {
+    position: absolute;
+    top: 45px;
+    z-index: 99;
+    width: 100%;
+}
+.upload-icon-top img{
+    width: 50px;
+}
+.file-upload .btn{
+    background-color: #f13d2f;
+    position: absolute;
+        top: 252px;
+    left: 514px;
+}
+
+
+
+
+
+
+
+
+@media only screen and (max-width: 600px) {
+    .file-upload .btn {
+    background-color: #f13d2f;
+    position: initial;
+    border: none;
+    bottom: 12px;
+    left: 514px;
+}
+    .format {
+        position: absolute;
+        top: 218px;
+        z-index: 999;
+        width: 100%;
+        padding: 0 50px;
+        color: #fff;
+        font-size: 14px;
+    }
+    .content h2 {
+        font-size: 35px;
+        color: #005ff9;
+        text-align: center;
+        font-weight: bold;
+    }
+    .content h3 {
+        font-size: 20px;
+        color: #acacac;
+        text-align: center;
+        padding: 0 20px;
+    }
+    .features {
+        text-align: center;
+        margin-top: 50px;
+    }
+    .logo img {
+        width: 100%;
+    }
+}
