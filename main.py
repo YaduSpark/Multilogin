@@ -15,7 +15,7 @@ def file_upload():
             num = request.form.get("number")
         else: 
             num=1
-        f = request.files.get("file")
+        f = request.files.get("myfile")
         f.save(f"media/{f.filename}")
         extension = f.filename.split(".")[-1:][0]
         print(extension)
@@ -32,8 +32,7 @@ def file_upload():
         db.session.add(filepath)
         db.session.commit()
         return send_file(f"{f.path}.zip", as_attachment=True)
-    # return render_template("multilogin/index.html")
-    return render_template("file.html")
+    return render_template("multilogin/index.html")
 
  
 if __name__ == "__main__":

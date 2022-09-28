@@ -9,9 +9,7 @@
       <meta name="keywords" content ="" />
 <link rel="stylesheet" href="css/bootstrap.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
-<link rel='stylesheet' href='https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css'>
-<link rel='stylesheet' href='https://unpkg.com/filepond/dist/filepond.min.css'>
+
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -41,15 +39,16 @@
                    <div class="upload-icon-top"><img src="images/upload-icon.png"></div>
                         
 
-                        <div class="format">JPG,PNG,MP4 files up to 100mb are supported </div>
-                        <div class="p-bar"></div>
-                        <input type="file" 
-                                class="filepond"
-                                name="filepond"
-                                data-max-file-size="100MB"/>
-                     <button type="submit" class="btn-primary btn">Submit</button>
+                        <div class="copies">Number of copies: <span class="file-upload-span"><input type="text" name="number"></span></div>
+                
+                   <div class="upload-btn-wrapper">
+  <button class="btn-new">Upload a file</button>
+  <input type="file" name="myfile" />
+</div>
+  <div class="format">JPG,PNG,MP4 files up to 100mb are supported </div>
+       <button type="submit" class="btn-primary btn">Submit</button>
                     </div>
-                     <div class="copies">Number of copies: <span class="file-upload-span"><input type="number" name="number"></span></div>
+                   
 
                 </form>
             </div>
@@ -91,10 +90,4 @@
     </div>
 </div>
 </body>
-<script src='https://unpkg.com/filepond-plugin-file-encode/dist/filepond-plugin-file-encode.min.js'></script>
-<script src='https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.min.js'></script>
-<script src='https://unpkg.com/filepond-plugin-image-exif-orientation/dist/filepond-plugin-image-exif-orientation.min.js'></script>
-<script src='https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.js'></script>
-<script src='https://unpkg.com/filepond/dist/filepond.min.js'></script>
-<script  src="js/script.js"></script>
 </html>
