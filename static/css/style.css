@@ -112,11 +112,11 @@ display: inline-block;
 .upload-icon-top img{
     width: 50px;
 }
-.file-upload .btn{
+.file-upload .btn {
     background-color: #f13d2f;
     position: absolute;
-        top: 292px;
-    left: 514px;
+    top: 276px;
+    left: 450px;
 }
 
 .upload-btn-wrapper {
@@ -151,8 +151,24 @@ display: inline-block;
     width: 100%;
     padding: 70px;
 }
-
-
+.dropzone {
+    min-height: 150px;
+    border:none;
+    background: #005ff9;
+    padding: 20px 20px;
+    position: relative;
+}
+.dropzone .dz-message .dz-button {
+    background: #fff;
+    color: #005ff9;
+    border: 1px solid #fff;
+    padding: 0;
+    padding: 10px 20px;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
+    border-radius: 6px;
+}
 
 
 

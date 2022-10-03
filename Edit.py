@@ -40,7 +40,7 @@ class ImageEdit():
     def dimentions(self):
         height = self.image.shape[0]
         width = self.image.shape[1]
-        return height >=300 and width >= 300
+        return height >=250 and width >= 250
             
     def exposure(self):
         exp = np.random.choice(["bright", "dark"])

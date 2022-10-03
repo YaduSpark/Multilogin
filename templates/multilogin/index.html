@@ -9,7 +9,8 @@
       <meta name="keywords" content ="" />
 <link rel="stylesheet" href="css/bootstrap.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+<link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -34,21 +35,16 @@
                     <h3>We uniqueize video and photo creatives for free</h3>
                 </div>
                 <div class="col-md-12">
-                  <form method="POST" enctype="multipart/form-data">
                     <div class="file-upload">
+                    <form action="{{ url_for('file_upload') }}" class="dropzone" id="upload-form" method="post">
                    <div class="upload-icon-top"><img src="images/upload-icon.png"></div>
                         
-
-                        <div class="copies">Number of copies: <span class="file-upload-span"><input type="text" name="number"></span></div>
-                
-                   <div class="upload-btn-wrapper">
-  <button class="btn-new">Upload a file</button>
-  <input type="file" name="myfile" />
-</div>
-  <div class="format">JPG,PNG,MP4 files up to 100mb are supported </div>
-       <button type="submit" class="btn-primary btn">Submit</button>
+<div class="copies">Number of copies: <span class="file-upload-span"><input type="text" name="number"></span></div>
+                        <div class="format">JPG,PNG,MP4 files up to 100mb are supported </div>
+                        <div class="preview"></div>
+       <button type="submit" class="btn-primary btn" id="toggle">Submit</button>
                     </div>
-                   
+                     
 
                 </form>
             </div>
@@ -90,4 +86,6 @@
     </div>
 </div>
 </body>
+<script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
+<script  src="js/script.js"></script>
 </html>
