@@ -115,17 +115,18 @@ display: inline-block;
 .file-upload .btn {
     background-color: #f13d2f;
     position: absolute;
-    top: 276px;
-    left: 450px;
+    bottom: -57px;
+    left: 415px;
+    padding: 10px 40px;
 }
 
 .upload-btn-wrapper {
     position: relative;
     overflow: hidden;
     display: inline-block;
-  }
+}
   
-  .btn-new {
+.btn-new {
     border:  1px solid #005ff9;
     color: #005ff9;
     background-color: white;
@@ -150,9 +151,10 @@ display: inline-block;
     display: inline-block;
     width: 100%;
     padding: 70px;
+    position: relative;
 }
 .dropzone {
-    min-height: 150px;
+    min-height: 170px;
     border:none;
     background: #005ff9;
     padding: 20px 20px;
@@ -171,11 +173,69 @@ display: inline-block;
 }
 
 
+#wait {
+    display: none;
+    color: #fff;
+    padding: 10px 0 0 0;
+    position: relative;
+    
+    
+}
+.dz-message span {
+    background-color: #fff;
+    padding: 15px 20px;
+    border-radius: 6px;
+    color: #005ff9;
+}
+.dropzone .dz-message {
+    text-align: center;
+    margin: 35px 0 0 0;
+}
+.loader {
+    border: 2px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 2px solid #000;
+    width: 20px;
+    height: 20px;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+    /* display: flex; */
+    position: absolute;
+    top: 10px;
+    right: -25px;
+}
+  
+  /* Safari */
+  @-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+.dropzone .dz-preview {
+    position: relative;
+    display: block;
+    width: 120px!important;
+    margin: 15px auto;
+    min-height: 100px;
+}
 
 
+.dz-details{
+    width: 100%;
+    padding: 30px 10px;
+    text-align: center;
+    margin: 0;
+}
 
-
-
+.download-none{
+    display: none;
+    margin-left: 45%;
+}
 
 
 

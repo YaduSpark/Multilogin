@@ -12,7 +12,7 @@ db_password = os.environ["DB_PASSWORD"]
 
 
 app = Flask(__name__, static_url_path='', static_folder='static')
-app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql://{db_user}:{db_password}@localhost/{database}'
+app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql://{db_user}:{db_password}@127.0.0.1/{database}'
 
 db = SQLAlchemy(app)
 migrate = Migrate(app,db)

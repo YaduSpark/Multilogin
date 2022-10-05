@@ -96,7 +96,6 @@ class ImageEdit():
             os.system(f"mkdir {self.path}")
         path = f"{self.path}/{uuid4()}.{self.extention}"
         cv.imwrite(path, image)
-        self.fileZip()
 
     def metadata(self):
         os.system(f"exiftool -all= {self.path}")
@@ -117,31 +116,32 @@ class ImageEdit():
 
 class VideoEdit():
     
-    def __init__(self, video):
+    def __init__(self, video, number):
         self.clip = VideoFileClip(video)
+        self.number= number
         self.file_name = uuid4()
         self.path = f"media/{self.file_name}"
         self.extention = video.split(".")[-1:][0]
         self.exp_value = 1.1
         self.speed_value = 1.1
-        self.video_height = 480
-        # self.resize_value = 0.9
+        # self.video_height = 480
+        self.resize_value = 0.9
         self.margin_width = 3
         self.color = (255,255,255)
         self.luminosity = 0
         self.contrast_value = 0.1
         self.contrast_thr = 20
-        self.edit_list = ["exposure", "speed", "margin", "contrast", "FPS"]                 #Add new edits to this list
+        self.edit_list = ["exposure", "speed", "resize", "margin", "contrast", "FPS"]                 #Add new edits to this list
         self.music_list = ["music_1", "music_2", "music_3", "music_4", "music_5", "music_6"]
 
 
-    def resize(self):
-        if self.clip.h > self.video_height:
-            self.clip = self.clip.resize(height = self.video_height)
-        return self.get_random()
+    def random_files(self):
+        for _ in range(self.number):
+            self.get_random()
+        self.fileZip()
 
     def get_random(self):
-        edit = {"exposure": "self.exposure()", "speed": "self.speed()", "margin": "self.margin()", "contrast": "self.contrast()", "FPS":"self.fps()"}
+        edit = {"exposure": "self.exposure()", "speed": "self.speed()", "resize":"self.resize()", "margin": "self.margin()", "contrast": "self.contrast()", "FPS":"self.fps()"}
         apply = np.random.choice(self.edit_list)
         eval(edit[apply])
         return self.audio(self.clip)
@@ -167,9 +167,9 @@ class VideoEdit():
         self.clip = self.clip.set_fps(fps+1)
         return "FPS"
 
-    # def resize(self):
-    #     self.clip = self.clip.resize(height = self.resize_value)
-    #     return "resize"
+    def resize(self):
+        self.clip = self.clip.resize(height = self.resize_value)
+        return "resize"
 
     # def crop(clip):
     #     size=clip.size
@@ -193,12 +193,10 @@ class VideoEdit():
             os.system(f"mkdir {self.path}")
         path = f"{self.path}/{uuid4()}.{self.extention}"
         video.write_videofile(path)
-        self.fileZip()
         
     def fileZip(self):
         for root, dirs, files in os.walk(f"{self.path}"):
             write_file = [write_file for write_file in files if write_file.split(".")[1] != f"{self.extention}_original"]
-            print(write_file)
             with ZipFile(f"media/{self.file_name}.zip", "w") as zip:
                 for file in write_file:
                     zip.write(f"{root}/{file}", arcname=f"{self.file_name}/{file}")

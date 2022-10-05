@@ -1,3 +1,18 @@
+// Dropzone.autoDiscover = false;
+// $(".dropzone").dropzone({
+//    url: "index",
+//    success: function (file, response) {
+//       if(response != 0){
+//          // Download link
+//          var anchorEl = document.createElement('a');
+//          anchorEl.setAttribute('href',response);
+//          anchorEl.setAttribute('target','_blank');
+//          anchorEl.innerHTML = "<br>Download";
+//          file.previewTemplate.appendChild(anchorEl);
+//       }
+//    }
+// });
+
 Dropzone.options.uploadForm = { // The camelized version of the ID of the form element
 
   // The configuration we've talked about above
@@ -20,19 +35,22 @@ Dropzone.options.uploadForm = { // The camelized version of the ID of the form e
 
     this.on("sending", function() {
       document.querySelector("button[type=submit]").style.display="none";
+      document.getElementById("wait").style.display="inline";
     });
 
-    // this.on("success", function(response){
-    //     console.log('GET response:');
-    //     var headers = response.data.headers();
-    //     var blob = new Blob([response.data],{type:headers['content-type']});
-    //     console.log(blob); 
-    //     var link = document.createElement('a');
-    //     link.href = window.URL.createObjectURL(blob);
-    //     link.download = "download.zip";
-    //     link.click();
-        
-    //   });
+    this.on("success", function(file, response){
+         // Download link
+         document.getElementById("download_btn").style.display="inline";
+         document.getElementById("wait").style.display="none";
+         var anchorEl = document.getElementById('button_url');
+         anchorEl.setAttribute('href',response);
+         anchorEl.setAttribute('target','_blank');
+        //  anchorEl.innerHTML = "<br>Download";
+        //  file.previewTemplate.appendChild(anchorEl);
+        // document.body.appendChild(anchorEl);
+        // anchorEl.click();
+        // anchorEl.remove();
+      });
     
       }
   };

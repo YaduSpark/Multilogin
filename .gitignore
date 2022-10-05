@@ -9,3 +9,7 @@ venv/
 
 # ignore pychach
 _pycache_/
+*.pyc
+
+docker-compose.yml
+Dockerfile
