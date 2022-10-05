@@ -20,7 +20,7 @@ Dropzone.options.uploadForm = { // The camelized version of the ID of the form e
   uploadMultiple: false,
   maxFilesize: 100,
   acceptedFiles:'.jpg, .jpeg, .png, .mp4',
-
+  maxFiles: 1,
   // The setting up of the dropzone
   init: function() {
     var myDropzone = this;
