@@ -5,7 +5,7 @@ media/
 .env
 
 # ignore virtual env
-venv/
+venv
 
 # ignore pychach
 _pycache_/
