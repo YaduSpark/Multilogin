@@ -8,7 +8,7 @@ media/
 venv/
 
 # ignore pychach
-_pycache_/
+__pycache__/
 *.pyc
 
 docker-compose.yml

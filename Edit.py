@@ -12,7 +12,7 @@ class ImageEdit():
         self.image = cv.imread(image)
         self.number = number
         self.file_name = uuid4()
-        self.path = f"media/{self.file_name}"
+        self.path = f"/var/www/unequalizer/public_html/media/{self.file_name}"
         self.extention = image.split(".")[-1:][0]
         self.exp_value = 10
         self.con_value = 1.2
@@ -104,7 +104,7 @@ class ImageEdit():
     def fileZip(self):
         for root, dirs, files in os.walk(f"{self.path}"):
             write_file = [write_file for write_file in files if write_file.split(".")[1] != f"{self.extention}_original"]
-            with ZipFile(f"media/{self.file_name}.zip", "w") as zip:
+            with ZipFile(f"/var/www/unequalizer/public_html/media/{self.file_name}.zip", "w") as zip:
                 for file in write_file:
                     zip.write(f"{root}/{file}", arcname=f"{self.file_name}/{file}")
         
@@ -120,7 +120,7 @@ class VideoEdit():
         self.clip = VideoFileClip(video)
         self.number= number
         self.file_name = uuid4()
-        self.path = f"media/{self.file_name}"
+        self.path = f"/var/www/unequalizer/public_html/media/{self.file_name}"
         self.extention = video.split(".")[-1:][0]
         self.exp_value = 1.1
         self.speed_value = 1.1
@@ -197,7 +197,7 @@ class VideoEdit():
     def fileZip(self):
         for root, dirs, files in os.walk(f"{self.path}"):
             write_file = [write_file for write_file in files if write_file.split(".")[1] != f"{self.extention}_original"]
-            with ZipFile(f"media/{self.file_name}.zip", "w") as zip:
+            with ZipFile(f"/var/www/unequalizer/public_html/media/{self.file_name}.zip", "w") as zip:
                 for file in write_file:
                     zip.write(f"{root}/{file}", arcname=f"{self.file_name}/{file}")
 

@@ -6,10 +6,13 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 
 load_dotenv()
+#database = 'unequalizer' #os.environ["DB"]
+#db_user = 'unequalizer' #os.environ["DB_USER"]
+#db_password = 'U7%akuLzX5yt' # os.environ["DB_PASSWORD"]
+
 database = os.environ["DB"]
 db_user = os.environ["DB_USER"]
 db_password = os.environ["DB_PASSWORD"]
-
 
 app = Flask(__name__, static_url_path='', static_folder='static')
 app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql://{db_user}:{db_password}@127.0.0.1/{database}'
