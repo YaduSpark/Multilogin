@@ -23,18 +23,18 @@ def file_upload():
             upload_file.save(f"{media_path}/{upload_file.filename}")
             if extension in images:
                 edit_file = ImageEdit(f"{media_path}/{upload_file.filename}", int(number))
-                edit_file.random_files()
             elif extension in videos:
                 edit_file = VideoEdit(f"{media_path}/{upload_file.filename}", int(number))
-                edit_file.random_files()
+            edit_file.random_files()
+            filepath = FilePath(file_name=edit_file.file_name, file_type=extension, file_path=edit_file.path)
+            db.session.add(filepath)
+            db.session.commit()
+            print(f"media/{edit_file.file_name}.zip")
+            return f"media/{edit_file.file_name}.zip"
+            del edit_file
         else:
             print("hello")
             return render_template("multilogin/index.html")
-        filepath = FilePath(file_name=edit_file.file_name, file_type=extension, file_path=edit_file.path)
-        db.session.add(filepath)
-        db.session.commit()
-        print(f"media/{edit_file.file_name}.zip")
-        return f"media/{edit_file.file_name}.zip"
     return render_template("multilogin/index.html")
 
 @app.route("/media/<path:filename>", methods=["GET"])

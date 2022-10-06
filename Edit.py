@@ -8,7 +8,7 @@ from uuid import uuid4
 media_path = os.environ["MEDIA_PATH"]
 music_path = os.environ["PROD_ROOT"] + '/music'
 
-class ImageEdit():
+class ImageEdit:
     
     def __init__(self, image, number):
         self.image = cv.imread(image)
@@ -115,8 +115,11 @@ class ImageEdit():
     #         hash = hashlib.sha256(f.read()).hexdigest()
     #         print(hash)
 
+    def __del__(self):
+        print("I am being destroyed")
 
-class VideoEdit():
+
+class VideoEdit:
     
     def __init__(self, video, number):
         self.clip = VideoFileClip(video)
@@ -207,3 +210,6 @@ class VideoEdit():
         os.system("exiftool -all= " + self.path)
         os.system("exiftool " + self.path)
         #return "Success!!"
+
+    def __del__(self):
+        print("I am being destroyed")
