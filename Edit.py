@@ -5,6 +5,8 @@ import numpy as np
 from zipfile import ZipFile
 from uuid import uuid4
 
+media_path = os.environ["MEDIA_PATH"]
+music_path = os.environ["PROD_ROOT"] + '/music'
 
 class ImageEdit():
     
@@ -12,7 +14,7 @@ class ImageEdit():
         self.image = cv.imread(image)
         self.number = number
         self.file_name = uuid4()
-        self.path = f"/var/www/unequalizer/public_html/media/{self.file_name}"
+        self.path = f"{media_path}/{self.file_name}"
         self.extention = image.split(".")[-1:][0]
         self.exp_value = 10
         self.con_value = 1.2
@@ -104,7 +106,7 @@ class ImageEdit():
     def fileZip(self):
         for root, dirs, files in os.walk(f"{self.path}"):
             write_file = [write_file for write_file in files if write_file.split(".")[1] != f"{self.extention}_original"]
-            with ZipFile(f"/var/www/unequalizer/public_html/media/{self.file_name}.zip", "w") as zip:
+            with ZipFile(f"{media_path}/{self.file_name}.zip", "w") as zip:
                 for file in write_file:
                     zip.write(f"{root}/{file}", arcname=f"{self.file_name}/{file}")
         
@@ -120,7 +122,7 @@ class VideoEdit():
         self.clip = VideoFileClip(video)
         self.number= number
         self.file_name = uuid4()
-        self.path = f"/var/www/unequalizer/public_html/media/{self.file_name}"
+        self.path = f"{media_path}/{self.file_name}"
         self.extention = video.split(".")[-1:][0]
         self.exp_value = 1.1
         self.speed_value = 1.1
@@ -182,7 +184,7 @@ class VideoEdit():
     def audio(self, edit):
         music = np.random.choice(self.music_list)
         video = edit.without_audio()
-        audio = AudioFileClip(f"music/{music}.mp4").subclip(0, video.duration)
+        audio = AudioFileClip(f"{music_path}/{music}.mp4").subclip(0, video.duration)
 
         new_audio = CompositeAudioClip([audio])
         video.audio = new_audio
@@ -197,11 +199,11 @@ class VideoEdit():
     def fileZip(self):
         for root, dirs, files in os.walk(f"{self.path}"):
             write_file = [write_file for write_file in files if write_file.split(".")[1] != f"{self.extention}_original"]
-            with ZipFile(f"/var/www/unequalizer/public_html/media/{self.file_name}.zip", "w") as zip:
+            with ZipFile(f"{media_path}/{self.file_name}.zip", "w") as zip:
                 for file in write_file:
                     zip.write(f"{root}/{file}", arcname=f"{self.file_name}/{file}")
 
     def metadata(self):
         os.system("exiftool -all= " + self.path)
         os.system("exiftool " + self.path)
-        return "Success!!"
+        #return "Success!!"

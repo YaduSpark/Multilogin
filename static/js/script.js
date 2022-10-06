@@ -52,5 +52,7 @@ Dropzone.options.uploadForm = { // The camelized version of the ID of the form e
         // anchorEl.remove();
       });
     
+       document.getElementById("download_btn").addEventListener("click", function(){setTimeout( window.location.reload(), 2000)});
       }
+    
   };
