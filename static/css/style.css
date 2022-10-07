@@ -232,13 +232,14 @@ display: inline-block;
     margin: 0;
 }
 
-.download-none{
-    display: none;
-    margin-left: 45%;
+#download_btn {
+    position: relative;
+    margin-right: 85%;
 }
 
-
-
+.download-none {
+    display: none;
+}
 
 
 
