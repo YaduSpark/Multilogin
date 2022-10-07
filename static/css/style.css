@@ -15,6 +15,13 @@
 body{
     font-family: 'Heebo', sans-serif;
 }
+
+/* Hiding the logo and registration/Login links */
+.header .logo {
+	display: none;
+}
+
+
 .logo{
     display: inline;
 }
@@ -37,6 +44,12 @@ body{
 .header nav ul{
     margin: 0;
 }
+
+/* Hiding the logo and registration/Login links */
+.header nav {
+	display: none;
+}
+
 .reg-btn{
     background: rgb(0,95,249);
     background: linear-gradient(90deg, rgba(0,95,249,1) 0%, rgba(9,80,194,1) 100%, rgba(255,255,255,1) 100%);
