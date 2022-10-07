@@ -43,9 +43,8 @@ Dropzone.options.uploadForm = { // The camelized version of the ID of the form e
          // Download link
          document.getElementById("download_btn").style.display="inline";
          document.getElementById("wait").style.display="none";
-         var anchorEl = document.getElementById('button_url');
+         var anchorEl = document.getElementById('download_btn');
          anchorEl.setAttribute('href',response);
-         anchorEl.setAttribute('target','_blank');
         //  anchorEl.innerHTML = "<br>Download";
         //  file.previewTemplate.appendChild(anchorEl);
         // document.body.appendChild(anchorEl);
@@ -53,7 +52,7 @@ Dropzone.options.uploadForm = { // The camelized version of the ID of the form e
         // anchorEl.remove();
       });
     
-       document.getElementById("download_btn").addEventListener("click", function(){setTimeout( window.location.reload(), 2000)});
+      // document.getElementById("download_btn").addEventListener("click", function(){setTimeout( window.location.reload(), 2000)});
       }
     
   };
