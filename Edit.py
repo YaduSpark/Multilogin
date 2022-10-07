@@ -8,7 +8,8 @@ from dotenv import load_dotenv
 
 load_dotenv()
 media_path = os.environ["MEDIA_PATH"]
-music_path = os.environ["PROD_ROOT"] + 'music'
+music_path = os.environ["PROD_ROOT"] + '/music'
+
 
 class ImageEdit:
     
@@ -101,9 +102,9 @@ class ImageEdit:
         path = f"{self.path}/{uuid4()}.{self.extention}"
         cv.imwrite(path, image)
 
-    # def metadata(self):
-    #     os.system(f"exiftool -all= {self.path}")
-    #     os.system(f"exiftool {self.path}")
+#     def metadata(self):
+#         os.system(f"exiftool -all= {self.path}")
+#         os.system(f"exiftool {self.path}")
 
     def fileZip(self):
         for root, dirs, files in os.walk(f"{self.path}"):
@@ -120,7 +121,7 @@ class ImageEdit:
     def __del__(self):
         os.system(f"rm -r {self.path}")
         print("I am being destroyed")
-
+        os.system(f"rm -rf {self.path}")
 
 class VideoEdit:
     
@@ -139,7 +140,7 @@ class VideoEdit:
         self.luminosity = 0
         self.contrast_value = 0.1
         self.contrast_thr = 20
-        self.edit_list = ["exposure", "speed", "margin", "contrast", "FPS", "crop"]                 #Add new edits to this list
+        self.edit_list = ["exposure", "speed", "margin", "contrast", "FPS", "crop"]                    #Add new edits to this list
         self.music_list = ["music_1", "music_2", "music_3", "music_4", "music_5", "music_6"]
 
 
@@ -175,9 +176,9 @@ class VideoEdit:
         self.clip = self.clip.set_fps(fps+1)
         return "FPS"
 
-    # def resize(self):                                             # causes error for some videos
-    #     self.clip = self.clip.resize(height = self.resize_value)
-    #     return "resize"
+#     def resize(self):                             # causes error for some videos
+#         self.clip = self.clip.resize(height = self.resize_value)
+#         return "resize"
 
     def crop(self):
         size=self.clip.size
@@ -210,11 +211,12 @@ class VideoEdit:
                 for file in write_file:
                     zip.write(f"{root}/{file}", arcname=f"{self.file_name}/{file}")
 
-    # def metadata(self):
-    #     os.system("exiftool -all= " + self.path)
-    #     os.system("exiftool " + self.path)
+#     def metadata(self):
+#         os.system("exiftool -all= " + self.path)
+#         os.system("exiftool " + self.path)
         #return "Success!!"
 
     def __del__(self):
         os.system(f"rm -r {self.path}")
         print("I am being destroyed")
+        os.system(f"rm -rf {self.path}")
