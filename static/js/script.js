@@ -21,7 +21,7 @@ Dropzone.options.uploadForm = { // The camelized version of the ID of the form e
   maxFilesize: 100,
   acceptedFiles:'.jpg, .jpeg, .png, .mp4',
   maxFiles: 1,
-  timeout: 180000,
+  // timeout: 180000,
   // The setting up of the dropzone
   init: function() {
     var myDropzone = this;
@@ -52,7 +52,7 @@ Dropzone.options.uploadForm = { // The camelized version of the ID of the form e
         // anchorEl.remove();
       });
     
-      // document.getElementById("download_btn").addEventListener("click", function(){setTimeout( window.location.reload(), 2000)});
+      // document.getElementById("download_btn").addEventListener("click", function(){setTimeout( window.location.reload.bind(window.location), 2000)});
       }
     
   };

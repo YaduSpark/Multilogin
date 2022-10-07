@@ -1,12 +1,15 @@
 from flask import render_template, request, send_from_directory
+from dotenv import load_dotenv
+import os
 
 from Edit import ImageEdit, VideoEdit
 from models import FilePath, db, app
-import os
+
+load_dotenv()
+media_path = os.environ["MEDIA_PATH"]
 
 images = ["jpg", "jpeg", "png"]
 videos = ["mp4", "aac", "wma"]
-media_path = os.environ["MEDIA_PATH"]
 
 @app.route("/", methods=["GET", "POST"])
 def file_upload():
@@ -24,14 +27,14 @@ def file_upload():
             elif extension in videos:
                 edit_file = VideoEdit(f"{media_path}/{upload_file.filename}", int(number))
             edit_file.random_files()
-            filepath = FilePath(file_name=edit_file.file_name, file_type=extension, file_path=edit_file.path)
+            filepath = FilePath(original_file_name=upload_file.filename, file_type=extension, \
+                copies_made=number, edited_file_path=edit_file.path)
             db.session.add(filepath)
             db.session.commit()
             print(f"media/{edit_file.file_name}.zip")
             return f"media/{edit_file.file_name}.zip"
             del edit_file
         else:
-            print("hello")
             return render_template("multilogin/index.html")
     return render_template("multilogin/index.html")
 
