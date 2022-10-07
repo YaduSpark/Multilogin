@@ -21,7 +21,7 @@ Dropzone.options.uploadForm = { // The camelized version of the ID of the form e
   maxFilesize: 100,
   acceptedFiles:'.jpg, .jpeg, .png, .mp4',
   maxFiles: 1,
-  timeout: 180000,
+  timeout: 60000,
   // The setting up of the dropzone
   init: function() {
     var myDropzone = this;
@@ -36,18 +36,25 @@ Dropzone.options.uploadForm = { // The camelized version of the ID of the form e
 
     this.on("sending", function() {
       document.querySelector("button[type=submit]").style.display="none";
-      document.getElementById("wait").style.display="inline";
+      //document.getElementById("wait").style.display="inline";
     });
 
     this.on("success", function(file, response){
-         // Download link
-         document.getElementById("wait").style.display="none";
-         var anchorEl = document.getElementById('download_btn');
-         anchorEl.setAttribute('href',response);
-         document.getElementById("download_btn").style.display="inline";
+         document.getElementById("wait").style.display="inline"; // Once upload is success, display the Processing message & loader
+         const obj = JSON.parse(response);
+         var xhttp = new XMLHttpRequest();
+         xhttp.onreadystatechange = function() {
+          if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
+            // Append Download link
+            var anchorEl = document.getElementById('download_btn');
+            anchorEl.setAttribute('href',xhttp.responseText);
+            document.getElementById("wait").style.display="none"; // Hide Processing message & loader
+            document.getElementById("download_btn").style.display="inline";
+          }
+        };
+        xhttp.open("GET", '/process/' + obj.filename + '/' + obj.number, true);
+        xhttp.send();
       });
-    
       // document.getElementById("download_btn").addEventListener("click", function(){setTimeout( window.location.reload(), 2000)});
-      }
-    
-  };
+    }    
+};
