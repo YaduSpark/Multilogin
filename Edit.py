@@ -99,9 +99,9 @@ class ImageEdit:
         path = f"{self.path}/{uuid4()}.{self.extention}"
         cv.imwrite(path, image)
 
-    def metadata(self):
-        os.system(f"exiftool -all= {self.path}")
-        os.system(f"exiftool {self.path}")
+#     def metadata(self):
+#         os.system(f"exiftool -all= {self.path}")
+#         os.system(f"exiftool {self.path}")
 
     def fileZip(self):
         for root, dirs, files in os.walk(f"{self.path}"):
@@ -136,7 +136,7 @@ class VideoEdit:
         self.luminosity = 0
         self.contrast_value = 0.1
         self.contrast_thr = 20
-        self.edit_list = ["exposure", "speed", "resize", "margin", "contrast", "FPS"]                 #Add new edits to this list
+        self.edit_list = ["exposure", "speed", "margin", "contrast", "FPS", "crop"]                    #Add new edits to this list
         self.music_list = ["music_1", "music_2", "music_3", "music_4", "music_5", "music_6"]
 
 
@@ -146,7 +146,7 @@ class VideoEdit:
         self.fileZip()
 
     def get_random(self):
-        edit = {"exposure": "self.exposure()", "speed": "self.speed()", "resize":"self.resize()", "margin": "self.margin()", "contrast": "self.contrast()", "FPS":"self.fps()"}
+        edit = {"exposure": "self.exposure()", "speed": "self.speed()", "margin": "self.margin()", "contrast": "self.contrast()", "FPS":"self.fps()", "crop":"self.crop()"}
         apply = np.random.choice(self.edit_list)
         eval(edit[apply])
         return self.audio(self.clip)
@@ -172,14 +172,15 @@ class VideoEdit:
         self.clip = self.clip.set_fps(fps+1)
         return "FPS"
 
-    def resize(self):
-        self.clip = self.clip.resize(height = self.resize_value)
-        return "resize"
+#     def resize(self):                             # causes error for some videos
+#         self.clip = self.clip.resize(height = self.resize_value)
+#         return "resize"
 
-    # def crop(clip):
-    #     size=clip.size
-    #     [width, height] = size
-    #     self.clip = clip.crop(width=width-10, height=height-10)
+    def crop(self):
+        size=self.clip.size
+        [width, height] = size
+        self.clip = self.clip.crop(width=width-5, height=height-5)
+        return "crop"
 
     # def invert_green_blue(image):
     #     self.clip = image[:,:,[0,2,1]]
@@ -206,9 +207,9 @@ class VideoEdit:
                 for file in write_file:
                     zip.write(f"{root}/{file}", arcname=f"{self.file_name}/{file}")
 
-    def metadata(self):
-        os.system("exiftool -all= " + self.path)
-        os.system("exiftool " + self.path)
+#     def metadata(self):
+#         os.system("exiftool -all= " + self.path)
+#         os.system("exiftool " + self.path)
         #return "Success!!"
 
     def __del__(self):
