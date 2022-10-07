@@ -29,7 +29,7 @@ def file_upload():
         filepath = FilePath(file_name=edit_file.file_name, file_type=extension, file_path=edit_file.path)
         db.session.add(filepath)
         db.session.commit()
-        # print(f"{edit_file.path}.zip")
+        print(f"{edit_file.filename}.zip")
         return f"{edit_file.path}.zip"
     return render_template("multilogin/index.html")
 
