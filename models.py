@@ -41,7 +41,8 @@ def configure_alembic(config):
 class FilePath(db.Model):
     __tablename__ = 'file_path'
     id = db.Column(db.Integer, primary_key=True)
-    file_name = db.Column(db.String(50), nullable=False)
+    original_file_name = db.Column(db.String(50), nullable=False)
     file_type = db.Column(db.String(5), nullable=False)
-    file_path = db.Column(db.String(100), nullable=False)
+    copies_made = db.Column(db.Integer)
+    edited_file_path = db.Column(db.String(100), nullable=False)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
