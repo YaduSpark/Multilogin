@@ -41,15 +41,10 @@ Dropzone.options.uploadForm = { // The camelized version of the ID of the form e
 
     this.on("success", function(file, response){
          // Download link
-         document.getElementById("download_btn").style.display="inline";
          document.getElementById("wait").style.display="none";
          var anchorEl = document.getElementById('download_btn');
          anchorEl.setAttribute('href',response);
-        //  anchorEl.innerHTML = "<br>Download";
-        //  file.previewTemplate.appendChild(anchorEl);
-        // document.body.appendChild(anchorEl);
-        // anchorEl.click();
-        // anchorEl.remove();
+         document.getElementById("download_btn").style.display="inline";
       });
     
       // document.getElementById("download_btn").addEventListener("click", function(){setTimeout( window.location.reload(), 2000)});

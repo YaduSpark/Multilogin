@@ -8,6 +8,7 @@ from uuid import uuid4
 media_path = os.environ["MEDIA_PATH"]
 music_path = os.environ["PROD_ROOT"] + '/music'
 
+
 class ImageEdit:
     
     def __init__(self, image, number):
@@ -117,7 +118,7 @@ class ImageEdit:
 
     def __del__(self):
         print("I am being destroyed")
-
+        os.system(f"rm -rf {self.path}")
 
 class VideoEdit:
     
@@ -214,3 +215,4 @@ class VideoEdit:
 
     def __del__(self):
         print("I am being destroyed")
+        os.system(f"rm -rf {self.path}")
