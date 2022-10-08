@@ -42,19 +42,17 @@ Dropzone.options.uploadForm = { // The camelized version of the ID of the form e
     this.on("success", function(file, response){
          document.getElementById("wait").style.display="inline"; // Once upload is success, display the Processing message & loader
          const obj = JSON.parse(response);
-         var xhttp = new XMLHttpRequest();
-         xhttp.onreadystatechange = function() {
-          if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
-            // Append Download link
-            var anchorEl = document.getElementById('download_btn');
-            anchorEl.setAttribute('href',xhttp.responseText);
-            document.getElementById("wait").style.display="none"; // Hide Processing message & loader
-            document.getElementById("download_btn").style.display="inline";
-          }
-        };
-        xhttp.open("GET", '/process/' + obj.filename + '/' + obj.number, true);
-        xhttp.send();
-      });
+	 getZip('/process/' + obj.filename + '/' + obj.number);
+
+         async function getZip(taskURL) {
+          let myObject = await fetch(taskURL);
+          let responseText = await myObject.text();
+          var anchorEl = document.getElementById('download_btn');
+          anchorEl.setAttribute('href',responseText);
+          document.getElementById("wait").style.display="none"; // Hide Processing message & loader
+          document.getElementById("download_btn").style.display="inline";
+         }
+     });
       // document.getElementById("download_btn").addEventListener("click", function(){setTimeout( window.location.reload(), 2000)});
-    }    
+   }    
 };
