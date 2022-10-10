@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 media_path = os.environ["MEDIA_PATH"]
-music_path = os.environ["PROD_ROOT"] + '/music'
+music_path = os.environ["PROD_ROOT"] + 'music'
 
 
 class ImageEdit:
@@ -122,6 +122,7 @@ class ImageEdit:
         os.system(f"rm -r {self.path}")
         print("I am being destroyed")
         os.system(f"rm -rf {self.path}")
+
 
 class VideoEdit:
     

@@ -13,3 +13,6 @@ __pycache__/
 
 docker-compose.yml
 Dockerfile
+
+# ignore redis db
+dump.rdb

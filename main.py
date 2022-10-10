@@ -1,18 +1,39 @@
 from flask import render_template, request, send_from_directory
-from dotenv import load_dotenv
+
 import os
+from rq import Queue
+from rq.job import Job
+from worker import conn
+from dotenv import load_dotenv
 
 from Edit import ImageEdit, VideoEdit
 from models import FilePath, db, app
 
+
 load_dotenv()
 media_path = os.environ["MEDIA_PATH"]
-import json
+
+q = Queue(connection=conn)
 
 images = ["jpg", "jpeg", "png"]
 videos = ["mp4", "aac", "wma"]
 
 media_path = os.environ["MEDIA_PATH"]
+
+
+def process_media(filename,number):
+    extension = filename.split(".")[-1:][0]
+    if extension in images:
+        edit_file = ImageEdit(f"{media_path}/{filename}", int(number))
+    elif extension in videos:
+        edit_file = VideoEdit(f"{media_path}/{filename}", int(number))
+    edit_file.random_files()
+    filepath = FilePath(original_file_name=filename, file_type=extension, copies_made=number, edited_file_path=edit_file.path)
+    db.session.add(filepath)
+    db.session.commit()
+    file_name = f"media/{edit_file.file_name}.zip"
+    return file_name
+
 
 @app.route("/", methods=["GET", "POST"])
 def file_upload():
@@ -25,29 +46,34 @@ def file_upload():
         extension = upload_file.filename.split(".")[-1:][0]
         if extension in images + videos:
             upload_file.save(f"{media_path}/{upload_file.filename}")
-            details = { "filename" : f"{upload_file.filename}", "number" : number }
-            return  json.dumps(details)
+            # details = { "filename" : f"{upload_file.filename}", "number" : number }
+            job = q.enqueue_call(func='main.process_media', args=(upload_file.filename,number,), result_ttl=5000)
+            # print('job_id: ', job.get_id())
+            job_id = job.get_id()
+            return job_id
+            # return redirect(url_for('task_status', job_id = job_id))
         else:
-            print("hello")
             return render_template("multilogin/index.html")
     return render_template("multilogin/index.html")
 
-@app.route("/process/<filename>/<number>", methods=["GET", "POST"])
-def process_media(filename,number):
-    extension = filename.split(".")[-1:][0]
-    if extension in images:
-        edit_file = ImageEdit(f"{media_path}/{filename}", int(number))
-    elif extension in videos:
-        edit_file = VideoEdit(f"{media_path}/{filename}", int(number))
-    edit_file.random_files()
-    filepath = FilePath(original_file_name=filename, file_type=extension, copies_made=number, edited_file_path=edit_file.path)
-    db.session.add(filepath)
-    db.session.commit()
-    print(f"media/{edit_file.file_name}.zip")
-    return f"media/{edit_file.file_name}.zip"
-    del edit_file
 
-@app.route("/media/<path:filename>", methods=["GET"])
+@app.route("/task/<job_id>", methods=["GET"]) # to be replaced it /task/<job-id>
+def task_status(job_id):
+
+    job = Job.fetch(job_id, connection=conn)
+    # print(job.result)
+    if job.is_finished:
+        return job.result, 200
+    else:
+        return "Please Wait!!!", 202
+    # random_num = 5
+    # if random_num < 6:
+    #     response = { "filename" : f"media/8acb39dc-b318-4a68-b1c0-9b52d56411ab.zip", "filestatus" : 2 }
+    # else:
+    #     response = { "filestatus" : 1 }
+    # return  json.dumps(response)
+
+@app.route("/media/<path:filename>")
 def file_download(filename):
     return send_from_directory(directory=media_path, path=filename)
 

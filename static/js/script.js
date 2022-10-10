@@ -1,18 +1,3 @@
-// Dropzone.autoDiscover = false;
-// $(".dropzone").dropzone({
-//    url: "index",
-//    success: function (file, response) {
-//       if(response != 0){
-//          // Download link
-//          var anchorEl = document.createElement('a');
-//          anchorEl.setAttribute('href',response);
-//          anchorEl.setAttribute('target','_blank');
-//          anchorEl.innerHTML = "<br>Download";
-//          file.previewTemplate.appendChild(anchorEl);
-//       }
-//    }
-// });
-
 Dropzone.options.uploadForm = { // The camelized version of the ID of the form element
 
   // The configuration we've talked about above
@@ -39,20 +24,42 @@ Dropzone.options.uploadForm = { // The camelized version of the ID of the form e
       //document.getElementById("wait").style.display="inline";
     });
 
-    this.on("success", function(file, response){
-         document.getElementById("wait").style.display="inline"; // Once upload is success, display the Processing message & loader
-         const obj = JSON.parse(response);
-	 getZip('/process/' + obj.filename + '/' + obj.number);
+    this.on("success", function startProcessing(file, response){
+      document.getElementById("wait").style.display="inline"; // Once upload is success, display the Processing message & loader
+      
+      const taskURL = "/task/" + response; // should be replaced with /task/taskID once python code is modified.
+      // console.log(taskURL)
 
-         async function getZip(taskURL) {
-          let myObject = await fetch(taskURL);
-          let responseText = await myObject.text();
+      const delay = (ms = 5000) => new Promise(r => setTimeout(r, ms));
+
+      async function getTaskStatus() {
+        await delay();
+        let response = await fetch(taskURL);
+        console.log(response.status)
+        if (parseInt(response.status) == 202){
+          getTaskStatus()}
+        let responseText = await response.text();
+        return  responseText;
+      }
+
+      async function taskStatusLongPoll() {
+        const response = await getTaskStatus();
+        // const taskStatus = JSON.parse(response);
+        if (response != "Please Wait!!!") { // filestatus 2 stands for complete
           var anchorEl = document.getElementById('download_btn');
-          anchorEl.setAttribute('href',responseText);
+          anchorEl.setAttribute('href',response);
           document.getElementById("wait").style.display="none"; // Hide Processing message & loader
           document.getElementById("download_btn").style.display="inline";
-         }
-     });
+        } else {
+          setTimeout(() => {
+            taskStatusLongPoll();
+          }, 5000);
+        }
+      }
+
+      taskStatusLongPoll();
+       
+    });
       // document.getElementById("download_btn").addEventListener("click", function(){setTimeout( window.location.reload(), 2000)});
    }    
 };
