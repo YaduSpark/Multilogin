@@ -12,34 +12,40 @@ music_path = os.environ["PROD_ROOT"] + 'music'
 
 
 class ImageEdit:
+
+    exp_value = 10
+    con_value = 1.2
+    top = 5
+    bottom = 5
+    left = 5
+    right = 5
+    border_color = [255,255,255]
+    flip_axis = 90
+    angle = 1
+    edit_list = ["exposure", "contrast", "border", "rotate"]
+    noise_list = ["gaussian", "poisson"]
     
-    def __init__(self, image, number):
-        self.image = cv.imread(image)
-        self.number = number
+    def __init__(self, image):
+        self.image_path = image
         self.file_name = uuid4()
         self.path = f"{media_path}/{self.file_name}"
-        self.extention = image.split(".")[-1:][0]
-        self.exp_value = 10
-        self.con_value = 1.2
-        self.top = 5
-        self.bottom = 5
-        self.left = 5
-        self.right = 5
-        self.border_color = [255,255,255]
-        self.flip_axis = 90
-        self.angle = 1
-        self.edit_list = ["exposure", "contrast", "border", "rotate"]
-        self.noise_list = ["gaussian", "poisson"]
+        self.extension = image.split(".")[-1:][0]
         
-    def random_files(self):
-        for _ in range(self.number):
-            self.get_random()
-        self.fileZip()
+    # def random_files(self):
+    #     # for _ in range(self.number):
+    #     self.get_random()
+    #     return self.path
+
+    @property
+    def image(self):
+        return cv.imread(self.image_path)
     
     def get_random(self):
         edit = {"exposure": self.exposure(), "contrast": self.contrast(), "border": self.border(), "rotate": self.rotate()}
         get_edit = np.random.choice(self.edit_list)
         get_noise = np.random.choice(self.noise_list)
+        print('get_edit: ', get_edit)
+        print('get_noise: ', get_noise)
         return self.noise(edit[get_edit], get_noise)
         
     def dimentions(self):
@@ -99,93 +105,97 @@ class ImageEdit:
     def save(self, image):
         if not os.path.isdir(f"{self.path}"):
             os.system(f"mkdir {self.path}")
-        path = f"{self.path}/{uuid4()}.{self.extention}"
+        path = f"{self.path}/{uuid4()}.{self.extension}"
         cv.imwrite(path, image)
 
 #     def metadata(self):
 #         os.system(f"exiftool -all= {self.path}")
 #         os.system(f"exiftool {self.path}")
 
-    def fileZip(self):
-        for root, dirs, files in os.walk(f"{self.path}"):
-            write_file = [write_file for write_file in files if write_file.split(".")[1] != f"{self.extention}_original"]
-            with ZipFile(f"{media_path}/{self.file_name}.zip", "w") as zip:
-                for file in write_file:
-                    zip.write(f"{root}/{file}", arcname=f"{self.file_name}/{file}")
+    # def fileZip(self):
+    #     for root, dirs, files in os.walk(f"{self.path}"):
+    #         write_file = [write_file for write_file in files if write_file.split(".")[1] != f"{self.extension}_original"]
+    #         with ZipFile(f"{media_path}/{self.file_name}.zip", "w") as zip:
+    #             for file in write_file:
+    #                 zip.write(f"{root}/{file}", arcname=f"{self.file_name}/{file}")
         
     # def hash(self):
     #     with open(f"{self.path}", "rb") as f:
     #         hash = hashlib.sha256(f.read()).hexdigest()
     #         print(hash)
 
-    def __del__(self):
-        os.system(f"rm -r {self.path}")
-        print("I am being destroyed")
-        os.system(f"rm -rf {self.path}")
+    # def __del__(self):
+    #     os.system(f"rm -r {self.path}")
+    #     print("I am being destroyed")
+    #     os.system(f"rm -rf {self.path}")
 
 
 class VideoEdit:
+
+    exp_value = 1.1
+    speed_value = 1.1
+    # video_height = 480
+    resize_value = 0.9
+    margin_width = 3
+    color = (255,255,255)
+    luminosity = 0
+    contrast_value = 0.1
+    contrast_thr = 20
     
-    def __init__(self, video, number):
-        self.clip = VideoFileClip(video)
-        self.number= number
+    edit_list = ["exposure", "speed", "margin", "contrast", "FPS", "crop"]                    #Add new edits to this list
+    music_list = ["music_1", "music_2", "music_3", "music_4", "music_5", "music_6"]
+    
+    def __init__(self, video):
+        self.video = video
         self.file_name = uuid4()
         self.path = f"{media_path}/{self.file_name}"
-        self.extention = video.split(".")[-1:][0]
-        self.exp_value = 1.1
-        self.speed_value = 1.1
-        # self.video_height = 480
-        self.resize_value = 0.9
-        self.margin_width = 3
-        self.color = (255,255,255)
-        self.luminosity = 0
-        self.contrast_value = 0.1
-        self.contrast_thr = 20
-        self.edit_list = ["exposure", "speed", "margin", "contrast", "FPS", "crop"]                    #Add new edits to this list
-        self.music_list = ["music_1", "music_2", "music_3", "music_4", "music_5", "music_6"]
+        self.extension = video.split(".")[-1:][0]
 
 
-    def random_files(self):
-        for _ in range(self.number):
-            self.get_random()
-        self.fileZip()
+    # def random_files(self):
+    #     for _ in range(self.number):
+    #         self.get_random()
+    #     return self.path
+
+    @property
+    def clip(self):
+        return VideoFileClip(self.video)
 
     def get_random(self):
         edit = {"exposure": "self.exposure()", "speed": "self.speed()", "margin": "self.margin()", "contrast": "self.contrast()", "FPS":"self.fps()", "crop":"self.crop()"}
         apply = np.random.choice(self.edit_list)
-        eval(edit[apply])
-        return self.audio(self.clip)
+        return self.audio(eval(edit[apply]))
 
     def exposure(self):
-        self.clip = self.clip.fx(vfx.colorx, self.exp_value)
-        return "Exposure"
+        video = self.clip.fx(vfx.colorx, self.exp_value)
+        return video
 
     def speed(self):
-        self.clip = self.clip.fx(vfx.speedx, self.speed_value)
-        return "Speed"
+        video = self.clip.fx(vfx.speedx, self.speed_value)
+        return video
 
     def margin(self):
-        self.clip = self.clip.margin(self.margin_width, color=self.color)
-        return "Border"
+        video = self.clip.margin(self.margin_width, color=self.color)
+        return video
         
     def contrast(self):
-        self.clip = self.clip.fx(vfx.lum_contrast, self.luminosity, self.contrast_value, self.contrast_thr)
-        return "Contrast"
+        video = self.clip.fx(vfx.lum_contrast, self.luminosity, self.contrast_value, self.contrast_thr)
+        return video
 
     def fps(self):
         fps = self.clip.fps
-        self.clip = self.clip.set_fps(fps+1)
-        return "FPS"
+        video = self.clip.set_fps(fps+1)
+        return video
 
 #     def resize(self):                             # causes error for some videos
-#         self.clip = self.clip.resize(height = self.resize_value)
-#         return "resize"
+#         video = self.clip.resize(height = self.resize_value)
+#         return video
 
     def crop(self):
         size=self.clip.size
         [width, height] = size
-        self.clip = self.clip.crop(width=width-5, height=height-5)
-        return "crop"
+        video = self.clip.crop(width=width-5, height=height-5)
+        return video
 
     # def invert_green_blue(image):
     #     self.clip = image[:,:,[0,2,1]]
@@ -202,20 +212,28 @@ class VideoEdit:
     def save(self, video):
         if not os.path.isdir(f"{self.path}"):
             os.system(f"mkdir {self.path}")
-        path = f"{self.path}/{uuid4()}.{self.extention}"
+        path = f"{self.path}/{uuid4()}.{self.extension}"
         video.write_videofile(path)
         
-    def fileZip(self):
-        for root, dirs, files in os.walk(f"{self.path}"):
-            write_file = [write_file for write_file in files if write_file.split(".")[1] != f"{self.extention}_original"]
-            with ZipFile(f"{media_path}/{self.file_name}.zip", "w") as zip:
-                for file in write_file:
-                    zip.write(f"{root}/{file}", arcname=f"{self.file_name}/{file}")
-
 #     def metadata(self):
 #         os.system("exiftool -all= " + self.path)
 #         os.system("exiftool " + self.path)
         #return "Success!!"
+
+
+class FileZip:
+
+    def __init__(self, path, file_name, extension):
+        self.path = path
+        self.file_name = file_name
+        self.extension = extension
+
+    def file_zip(self):
+        for root, dirs, files in os.walk(f"{self.path}"):
+            write_file = [write_file for write_file in files if write_file.split(".")[1] != f"{self.extension}_original"]
+            with ZipFile(f"{media_path}/{self.file_name}.zip", "w") as zip:
+                for file in write_file:
+                    zip.write(f"{root}/{file}", arcname=f"{self.file_name}/{file}")
 
     def __del__(self):
         os.system(f"rm -r {self.path}")

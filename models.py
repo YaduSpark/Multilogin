@@ -46,3 +46,10 @@ class FilePath(db.Model):
     copies_made = db.Column(db.Integer)
     edited_file_path = db.Column(db.String(100), nullable=False)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
+
+
+# class RedisFile(db.Model):
+#     __tablename__ = 'redis_file'
+#     id = db.Column(db.Integer, primary_key=True)
+#     original_file_id = db.Column(db.Integer, db.ForeignKey('file_path.id'))
+#     original_file = db.relationship("original_file", backref=backref("file_path", uselist=False))

@@ -18,10 +18,11 @@ Dropzone.options.uploadForm = { // The camelized version of the ID of the form e
       e.stopPropagation();
       myDropzone.processQueue();
     });
-
+    
     this.on("sending", function() {
       document.querySelector("button[type=submit]").style.display="none";
       //document.getElementById("wait").style.display="inline";
+      date1 = new Date();
     });
 
     this.on("success", function startProcessing(file, response){
@@ -50,6 +51,8 @@ Dropzone.options.uploadForm = { // The camelized version of the ID of the form e
           anchorEl.setAttribute('href',response);
           document.getElementById("wait").style.display="none"; // Hide Processing message & loader
           document.getElementById("download_btn").style.display="inline";
+          date2 = new Date();
+          time_taken(date1, date2)
         } else {
           setTimeout(() => {
             taskStatusLongPoll();
@@ -58,8 +61,22 @@ Dropzone.options.uploadForm = { // The camelized version of the ID of the form e
       }
 
       taskStatusLongPoll();
-       
+      
     });
-      // document.getElementById("download_btn").addEventListener("click", function(){setTimeout( window.location.reload(), 2000)});
-   }    
+    // document.getElementById("download_btn").addEventListener("click", function(){setTimeout( window.location.reload(), 2000)});
+  }    
 };
+
+
+function time_taken(date1, date2){
+  var diff = date2.getTime() - date1.getTime();
+
+  var msec = diff;
+  var hh = Math.floor(msec / 1000 / 60 / 60);
+  msec -= hh * 1000 * 60 * 60;
+  var mm = Math.floor(msec / 1000 / 60);
+  msec -= mm * 1000 * 60;
+  var ss = Math.floor(msec / 1000);
+  msec -= ss * 1000;
+
+  console.log(hh + ":" + mm + ":" + ss);}
