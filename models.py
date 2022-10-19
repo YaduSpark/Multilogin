@@ -16,6 +16,7 @@ db_password = os.environ["DB_PASSWORD"]
 
 app = Flask(__name__, static_url_path='', static_folder='static')
 app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql://{db_user}:{db_password}@127.0.0.1/{database}'
+app.secret_key = 'd6b23e-f38f-46e8-9d4f-de913a5d8015'
 
 db = SQLAlchemy(app)
 migrate = Migrate(app,db)
@@ -41,7 +42,7 @@ def configure_alembic(config):
 class FilePath(db.Model):
     __tablename__ = 'file_path'
     id = db.Column(db.Integer, primary_key=True)
-    original_file_name = db.Column(db.String(50), nullable=False)
+    original_file_name = db.Column(db.String(100), nullable=False)
     file_type = db.Column(db.String(5), nullable=False)
     copies_made = db.Column(db.Integer)
     edited_file_path = db.Column(db.String(100), nullable=False)

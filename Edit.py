@@ -236,6 +236,5 @@ class FileZip:
                     zip.write(f"{root}/{file}", arcname=f"{self.file_name}/{file}")
 
     def __del__(self):
-        os.system(f"rm -r {self.path}")
-        print("I am being destroyed")
         os.system(f"rm -rf {self.path}")
+        print("I am being destroyed")
