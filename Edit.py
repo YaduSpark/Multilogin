@@ -107,10 +107,12 @@ class ImageEdit:
             os.system(f"mkdir {self.path}")
         path = f"{self.path}/{uuid4()}.{self.extension}"
         cv.imwrite(path, image)
+        self.metadata()
 
-#     def metadata(self):
-#         os.system(f"exiftool -all= {self.path}")
-#         os.system(f"exiftool {self.path}")
+    def metadata(self):
+        os.system(f"exiftool -all= {self.path}")
+        # os.system(f"exiftool {self.path}")
+        return 'Success'
 
     # def fileZip(self):
     #     for root, dirs, files in os.walk(f"{self.path}"):
@@ -213,12 +215,16 @@ class VideoEdit:
         if not os.path.isdir(f"{self.path}"):
             os.system(f"mkdir {self.path}")
         path = f"{self.path}/{uuid4()}.{self.extension}"
-        video.write_videofile(path)
+        temp_filepath = f"{media_path}/temp/{uuid4()}.mp3"
+        print(temp_filepath)
+        os.system(f'touch {temp_filepath}')
+        video.write_videofile(path, temp_audiofile=temp_filepath)
+        self.metadata()
         
-#     def metadata(self):
-#         os.system("exiftool -all= " + self.path)
-#         os.system("exiftool " + self.path)
-        #return "Success!!"
+    def metadata(self):
+        os.system("exiftool -all= " + self.path)
+        # os.system("exiftool " + self.path)
+        return "Success!!"
 
 
 class FileZip:
@@ -234,6 +240,7 @@ class FileZip:
             with ZipFile(f"{media_path}/{self.file_name}.zip", "w") as zip:
                 for file in write_file:
                     zip.write(f"{root}/{file}", arcname=f"{self.file_name}/{file}")
+
 
     def __del__(self):
         os.system(f"rm -rf {self.path}")
